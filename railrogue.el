@@ -13,23 +13,26 @@
 (define-derived-mode railrogue-mode special-mode "railrogue")
 
 (defun railrogue-init ()
-  "Start a new game of railrogue. Makes a 10x10 board of period chars."
-  (setq *railrogue-board* (make-vector (* *railrogue-size*
-					  *railrogue-size*)
+  "Start a new game of railrogue. Makes a row x col board of period chars."
+  (setq *railrogue-board* (make-vector (* *railrogue-width*
+					  *railrogue-height*)
 				       ?\.))
   (railrogue-print-board))
 
 (defvar *railrogue-board* nil
   "The board itself.")
 
-(defconst *railrogue-size* 10
-  "The size of the board -- both height and width are the same for now.")
+(defconst *railrogue-width* 20
+  "The width of the board.")
+
+(defconst *railrogue-height* 10
+  "The height of the board.")
 
 (defun railrogue-print-board ()
   (let ((inhibit-read-only t))
     (erase-buffer)
-    (dotimes (row *railrogue-size*)
-      (dotimes (column *railrogue-size*)
+    (dotimes (row *railrogue-height*)
+      (dotimes (column *railrogue-width*)
 	(insert (railrogue-get-square row column)))
       (insert "\n"))))
 
@@ -38,14 +41,14 @@
   (elt *railrogue-board*
        (+ column
 	  (* row
-	     *railrogue-size*))))
+	     *railrogue-width*))))
 
 (defun railrogue-set-square (row column value)
   "Set the value in the (row, column) square to value."
   (aset *railrogue-board*
 	(+ column
 	   (* row
-	      *railrogue-size*))
+	      *railrogue-width*))
 	value))
 
 (defun railrogue-mark ()
