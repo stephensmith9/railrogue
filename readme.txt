@@ -8,4 +8,6 @@ is open in).
 setup C-x g as the first keybinding (runs magit-status which we'll use all the time)
 - you can repeat the C-x g to refresh the buffer (or even better just type 'g' while in any magit buffer)
 - almost all magit commands can be run while in this buffer
+- s to stage, u to unstage, n and p to move between sections, tab expands and collapses sections, c commits
+- to commit type c, then c again to confirm then fill in the commit msg then type C-c C-c to do the actual commit
 
