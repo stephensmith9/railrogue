@@ -36,8 +36,8 @@
   "The height of the board.")
 
 (defun railrogue-print-board ()
-  (let ((inhibit-read-only t))
-    (erase-buffer)
+  (let ((inhibit-read-only t)) ; remember that the new mode statement put us in read-only mode by default, and now we want to write to it to be able to print the board, duh
+    (erase-buffer) ; clear out anything already there, like a previous board
     (dotimes (row *railrogue-height*)
       (dotimes (column *railrogue-width*)
 	(insert (railrogue-get-square row column)))
@@ -58,9 +58,11 @@
 	      *railrogue-width*))
 	value))
 
+; this function gets created at the 20min mark in the youtube video and
+; we stopped at 23:00 basically the first time we wrote this script
 (defun railrogue-mark ()
   "Mark the current square"
-  (interactive)
+  (interactive) ; add this because the user will call this function
   (let ((row (1- (line-number-at-pos))) ;line-number-at-pos is not 0-indexed
 	(column (current-column)))      ;current-column is
     (railrogue-set-square row column ?\X)
