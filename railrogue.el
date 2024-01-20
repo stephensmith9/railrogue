@@ -1,17 +1,24 @@
-;; railrogue -- play railrogue in Emacs
+;; railrogue.el -- play railrogue in Emacs
 ;; came from here: https://www.youtube.com/watch?v=gk39mp8Vy4M
 ;; YouTube video called 'Writing Games with Emacs'
 ;; do M-x eval-buffer to load this code into your current emacs session
 
+; this function will be what the user calls using 'M-x railrogue'
 (defun railrogue ()
   "Start playing railrogue."
   (interactive)
   (switch-to-buffer "railrogue") ;will create it if it doesn't already exist
-  (railrogue-mode)
-  (railrogue-init))
+  (railrogue-mode) ; go into our new mode
+  (railrogue-init)) ; then init it
 
+; this is where we define our new mode, and we derive it using this special function
+; and the special param called special-mode, which is made for doing exactly this type
+; of thing (creating a new mode) and it creates a buffer that you can't type in, among
+; a few other things, which remains for us to lookup and discover. The final param
+; is what you want to see in the modeline, in our case the string "railrogue"
 (define-derived-mode railrogue-mode special-mode "railrogue")
 
+ ; the last arg to make-vector is the init arg, which we are init'ng with the period char
 (defun railrogue-init ()
   "Start a new game of railrogue. Makes a row x col board of period chars."
   (setq *railrogue-board* (make-vector (* *railrogue-width*

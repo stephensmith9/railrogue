@@ -6,6 +6,7 @@ auto-complete and got a list of valid VC systems. Simple, it just asks for your 
 is open in).
 
 setup C-x g as the first keybinding (runs magit-status which we'll use all the time)
+- note, I put this in the wrong init.el file first, but caught this later and put it in the right one (in AppData/Roaming/etc)
 - you can repeat the C-x g to refresh the buffer (or even better just type 'g' while in any magit buffer)
 - almost all magit commands can be run while in this buffer
 - s to stage, u to unstage, n and p to move between sections, tab expands and collapses sections, c commits
