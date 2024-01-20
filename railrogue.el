@@ -71,5 +71,5 @@
 
 ; instead of current player in tic-tac-toe, we're going to set current item
 ; which will be things like track, switch, engine, railcar, etc.
-(defun *railroque-current-item* nil
+(defun *railrogue-current-item* nil
   "The character representing the current item.")
