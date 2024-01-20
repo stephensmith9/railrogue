@@ -24,7 +24,8 @@
   (setq *railrogue-board* (make-vector (* *railrogue-width*
 					  *railrogue-height*)
 				       ?\.))
-  (railrogue-print-board))
+  (railrogue-print-board)
+  (setq *railrogue-current-item* ?\=))
 
 (defvar *railrogue-board* nil
   "The board itself.")
@@ -65,5 +66,10 @@
   (interactive) ; add this because the user will call this function
   (let ((row (1- (line-number-at-pos))) ;line-number-at-pos is not 0-indexed
 	(column (current-column)))      ;current-column is
-    (railrogue-set-square row column ?\X)
+    (railrogue-set-square row column *railrogue-current-item*)
     (railrogue-print-board)))
+
+; instead of current player in tic-tac-toe, we're going to set current item
+; which will be things like track, switch, engine, railcar, etc.
+(defun *railroque-current-item* nil
+  "The character representing the current item.")
