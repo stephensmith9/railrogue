@@ -16,7 +16,8 @@
 ; of thing (creating a new mode) and it creates a buffer that you can't type in, among
 ; a few other things, which remains for us to lookup and discover. The final param
 ; is what you want to see in the modeline, in our case the string "railrogue"
-(define-derived-mode railrogue-mode special-mode "railrogue")
+(define-derived-mode railrogue-mode special-mode "railrogue"
+  (define-key railrogue-mode-map (kbd "SPC") 'railrogue-mark))
 
  ; the last arg to make-vector is the init arg, which we are init'ng with the period char
 (defun railrogue-init ()
@@ -64,10 +65,12 @@
 (defun railrogue-mark ()
   "Mark the current square"
   (interactive) ; add this because the user will call this function
-  (let ((row (1- (line-number-at-pos))) ;line-number-at-pos is not 0-indexed
-	(column (current-column)))      ;current-column is
+  (let ((row (1- (line-number-at-pos))) ; line-number-at-pos is not 0-indexed
+	(column (current-column)))      ; current-column is
     (railrogue-set-square row column *railrogue-current-item*)
-    (railrogue-print-board)))
+    (setq my-posn (point)) ; save our posn so we can return here after the board is redrawn
+    (railrogue-print-board)
+    (goto-char my-posn)))
 
 ; instead of current player in tic-tac-toe, we're going to set current item
 ; which will be things like track, switch, engine, railcar, etc.
