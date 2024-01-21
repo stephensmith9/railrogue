@@ -17,7 +17,8 @@
 ; a few other things, which remains for us to lookup and discover. The final param
 ; is what you want to see in the modeline, in our case the string "railrogue"
 (define-derived-mode railrogue-mode special-mode "railrogue"
-  (define-key railrogue-mode-map (kbd "SPC") 'railrogue-mark))
+  (define-key railrogue-mode-map (kbd "SPC") 'railrogue-mark)
+  (define-key railrogue-mode-map (kbd "r") 'railrogue-reset))
 
  ; the last arg to make-vector is the init arg, which we are init'ng with the period char
 (defun railrogue-init ()
@@ -38,6 +39,7 @@
   "The height of the board.")
 
 (defun railrogue-print-board ()
+  "Write the board to the buffer, based on all the current values for each square."
   (let ((inhibit-read-only t)) ; remember that the new mode statement put us in read-only mode by default, and now we want to write to it to be able to print the board, duh
     (erase-buffer) ; clear out anything already there, like a previous board
     (dotimes (row *railrogue-height*)
@@ -72,6 +74,14 @@
     (railrogue-print-board)
     (goto-char my-posn)))
 
+(defun railrogue-reset ()
+  "Reset all squares on the board."
+  (interactive) ; user will call this
+  (setq *railrogue-board* (make-vector (* *railrogue-width*
+					  *railrogue-height*)
+				       ?\.))
+  (railrogue-print-board))
+  
 ; instead of current player in tic-tac-toe, we're going to set current item
 ; which will be things like track, switch, engine, railcar, etc.
 (defun *railrogue-current-item* nil
