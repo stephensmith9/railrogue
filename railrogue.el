@@ -22,10 +22,8 @@
 
  ; the last arg to make-vector is the init arg, which we are init'ng with the period char
 (defun railrogue-init ()
-  "Start a new game of railrogue. Makes a row x col board of period chars."
-  (setq *railrogue-board* (make-vector (* *railrogue-width*
-					  *railrogue-height*)
-				       ?\.))
+  "Start a new game of railrogue."
+  (railrogue-fill-board ?\.)
   (railrogue-print-board)
   (setq *railrogue-current-item* ?\=))
 
@@ -40,7 +38,7 @@
 
 (defun railrogue-print-board ()
   "Write the board to the buffer, based on all the current values for each square."
-  (let ((inhibit-read-only t)) ; remember that the new mode statement put us in read-only mode by default, and now we want to write to it to be able to print the board, duh
+  (let ((inhibit-read-only t)) ; remember that the new mode statement put us in read-only mode by default
     (erase-buffer) ; clear out anything already there, like a previous board
     (dotimes (row *railrogue-height*)
       (dotimes (column *railrogue-width*)
@@ -74,12 +72,16 @@
     (railrogue-print-board)
     (goto-char my-posn)))
 
+(defun railrogue-fill-board (value)
+  "Fill the board with a single value."
+  (setq *railrogue-board* (make-vector (* *railrogue-width*
+					  *railrogue-height*)
+				       value)))
+
 (defun railrogue-reset ()
   "Reset all squares on the board."
   (interactive) ; user will call this
-  (setq *railrogue-board* (make-vector (* *railrogue-width*
-					  *railrogue-height*)
-				       ?\.))
+  (railrogue-fill-board ?\.)
   (railrogue-print-board))
   
 ; instead of current player in tic-tac-toe, we're going to set current item
