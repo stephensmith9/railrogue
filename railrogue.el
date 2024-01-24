@@ -18,14 +18,8 @@
 ; is what you want to see in the modeline, in our case the string "railrogue"
 (define-derived-mode railrogue-mode special-mode "railrogue"
   (define-key railrogue-mode-map (kbd "SPC") 'railrogue-mark)
-  (define-key railrogue-mode-map (kbd "r") 'railrogue-reset))
-
- ; the last arg to make-vector is the init arg, which we are init'ng with the period char
-(defun railrogue-init ()
-  "Start a new game of railrogue."
-  (railrogue-fill-board ?\.)
-  (railrogue-print-board)
-  (setq *railrogue-current-item* ?\=))
+  (define-key railrogue-mode-map (kbd "r") 'railrogue-reset)
+  (define-key railrogue-mode-map (kbd "C-c s") 'railrogue-set-current-item))
 
 (defvar *railrogue-board* nil
   "The board itself.")
@@ -35,6 +29,21 @@
 
 (defconst *railrogue-height* 10
   "The height of the board.")
+
+(defconst *railrogue-track* ?\=
+  "The char for a section of track.")
+
+(defconst *railrogue-engine-eastbound* ?\>
+  "The char for an east-facing engine.")
+
+(defconst *railrogue-engine-westbound* ?\<
+  "The char for a west-facing engine.")
+
+(defun railrogue-init ()
+  "Start a new game of railrogue."
+  (railrogue-fill-board ?\.)
+  (railrogue-print-board)
+  (setq *railrogue-current-item* ?\=))
 
 (defun railrogue-print-board ()
   "Write the board to the buffer, based on all the current values for each square."
@@ -86,5 +95,8 @@
   
 ; instead of current player in tic-tac-toe, we're going to set current item
 ; which will be things like track, switch, engine, railcar, etc.
-(defun *railrogue-current-item* nil
-  "The character representing the current item.")
+(defun railrogue-set-current-item (value)
+  "Set value to the current character."
+  (interactive "sEnter a char to use as current item: ")
+  (setq *railrogue-current-item* value)
+  (message "Item now set to: %s" value))
