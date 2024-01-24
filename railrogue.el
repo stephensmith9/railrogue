@@ -30,6 +30,9 @@
 (defconst *railrogue-height* 10
   "The height of the board.")
 
+(defconst *railrogue-fill-char* ?\.
+  "The default char used to fill the board on creation.")
+
 (defconst *railrogue-track* ?\=
   "The char for a section of track.")
 
@@ -41,7 +44,7 @@
 
 (defun railrogue-init ()
   "Start a new game of railrogue."
-  (railrogue-fill-board ?\.)
+  (railrogue-fill-board *railrogue-fill-char*)
   (railrogue-print-board)
   (setq *railrogue-current-item* ?\=))
 
@@ -90,7 +93,7 @@
 (defun railrogue-reset ()
   "Reset all squares on the board."
   (interactive) ; user will call this
-  (railrogue-fill-board ?\.)
+  (railrogue-fill-board *railrogue-fill-char*)
   (railrogue-print-board))
   
 ; instead of current player in tic-tac-toe, we're going to set current item
