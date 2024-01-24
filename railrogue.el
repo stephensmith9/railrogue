@@ -46,7 +46,7 @@
   "Start a new game of railrogue."
   (railrogue-fill-board *railrogue-fill-char*)
   (railrogue-print-board)
-  (setq *railrogue-current-item* ?\=))
+  (setq *railrogue-current-item* *railrogue-track*))
 
 (defun railrogue-print-board ()
   "Write the board to the buffer, based on all the current values for each square."
